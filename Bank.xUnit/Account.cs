@@ -6,19 +6,41 @@ namespace Bank.xUnit
 {
 	public class Account
 	{
+		//public double Interest { get; set; }
 		public double Balance { get; private set; }
-		//Balance ska vara kontots saldo.Använd egenskapen för att kontrollera vad saldot är efter varje funktionsanrop.Man ska inte kunna ändra saldot via egenskapen, bara genom klassens metoder.Behöver inte testas.
 
-		public Account(double initialBalance) { }
-		//Konstruktorn ska anropas med det värde ni vill att kontot ska ha från början. (Om ni gör VG-versionen så ska räntesatsen också vara en parameter.)
+		public Account(double initialBalance/*, double interest*/)
+		{
+			this.Balance = initialBalance;
+		}
 
-		public void Deposit(double amount) { }
-		//Ökar saldot på kontot med amount.Alla double-tal som rimligtvis kan tänkas motsvara ett pengabelopp är tillåtna värden.Om funktionen får ett otillåtet double-tal som parameter ska den kasta ett Exception med ett lämpligt felmeddelande.
+		public void Deposit(double amount)
+		{
+			if (amount <= 0)
+				throw new Exception("Unable to deposit amount under 1 SEK, idiot.");
+			else if (amount >= 50000)
+				throw new Exception("Unable to deposit more than 50 000 SEK. The police are on the way and don't try to run - the security camera has already seen you.");
+			else
+				this.Balance = this.Balance + amount;
+		}
 
-		public void Withdraw(double amount) { }
-		//Minskar saldot på kontot med amount, förutsatt att det finns tillräckligt med pengar på kontot.Om det inte gör det ska funktionen inte dra några pengar utan i stället kasta ett Exception med ett lämpligt felmeddelande.Samma sak om amount är ett otillåtet double-tal.
+		public void Withdraw(double amount)
+		{
+			if (this.Balance <= 0)
+				throw new Exception("Not enough money on the account.");
+			else if (amount > 5000)
+				throw new Exception("Not allowed to withdraw more than 5000 SEK.");
+			if(amount <= 0)
+				throw new Exception("Unable to withdraw amount under 1 SEK, idiot.");
+			else
+				this.Balance = this.Balance - amount;
+		}
 
-		public bool Transfer(Account target, double amount) { return true;  }
+		public bool Transfer(Account target, double amount) {
+
+			//if()
+			return true;
+		}
 		//Minskar saldot på kontot med amount och ökar med motsvarande belopp på mottagarkontot, förutsatt att inget har gått fel. Men det finns ganska många anledningar till att det kan gå fel.
 
 		public double CalculateInterest() { return 2.1; }
