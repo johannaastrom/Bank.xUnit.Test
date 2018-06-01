@@ -93,7 +93,7 @@ namespace Bank.xUnit.Test
 
 			double amount = 100;
 			account.Transfer(savingsAccount, amount);
-			double actualBalance = account.Balance;
+			double actualBalance = savingsAccount.Balance;
 			double expectedBalance = 1100;
 			Assert.Equal(expectedBalance, actualBalance);
 		}
@@ -107,8 +107,31 @@ namespace Bank.xUnit.Test
 			double amount = 100;
 			account.Transfer(savingsAccount, amount);
 			double actualBalance = account.Balance;
-			double expectedBalance = 1100;
+			double expectedBalance = 400;
 			Assert.Equal(expectedBalance, actualBalance);
+		}
+
+		[Fact] //Transfer method
+		public void ShouldThrowIfAmountToTransferIsMinus()
+		{
+			Account account = new Account(0/*, 1.34*/);
+			Account savingsAccount = new Account(50/*, 1.34*/);
+
+			Assert.Throws<Exception>(() =>
+			{
+				account.Transfer(savingsAccount, -1);
+			});
+		}
+
+		[Fact]
+		public void ShouldThrowIfTransferingToSameAccount()
+		{
+			Account account = new Account(50/*, 1.34*/);
+
+			Assert.Throws<Exception>(() =>
+			{
+				account.Transfer(account, 5);
+			});
 		}
 	}
 }

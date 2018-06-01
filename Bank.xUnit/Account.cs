@@ -17,9 +17,9 @@ namespace Bank.xUnit
 		public void Deposit(double amount)
 		{
 			if (amount <= 0)
-				throw new Exception("Unable to deposit amount under 1 SEK, idiot.");
+				throw new Exception("Unable to deposit amount under 1 SEK.");
 			else if (amount >= 50000)
-				throw new Exception("Unable to deposit more than 50 000 SEK. The police are on the way and don't try to run - the security camera has already seen you.");
+				throw new Exception("Unable to deposit more than 50 000 SEK.");
 			else
 				this.Balance = this.Balance + amount;
 		}
@@ -30,18 +30,28 @@ namespace Bank.xUnit
 				throw new Exception("Not enough money on the account.");
 			else if (amount > 5000)
 				throw new Exception("Not allowed to withdraw more than 5000 SEK.");
-			if(amount <= 0)
-				throw new Exception("Unable to withdraw amount under 1 SEK, idiot.");
+			if (amount <= 0)
+				throw new Exception("Unable to withdraw amount under 1 SEK.");
 			else
 				this.Balance = this.Balance - amount;
 		}
 
-		public bool Transfer(Account target, double amount) {
-
-			//if()
-			return true;
+		public bool Transfer(Account target, double amount)
+		{
+			if (this == target)
+				throw new Exception("You can't transfer to the same account.");
+			if (amount > this.Balance)
+				throw new Exception("You dont have enough funds to transfer.");
+			else if (amount < this.Balance)
+			{
+				this.Withdraw(amount);
+				target.Deposit(amount);
+				return true;
+			}
+			else
+				return true;
 		}
-		//Minskar saldot på kontot med amount och ökar med motsvarande belopp på mottagarkontot, förutsatt att inget har gått fel. Men det finns ganska många anledningar till att det kan gå fel.
+
 
 		public double CalculateInterest() { return 2.1; }
 		//För VG.Räknar ut räntan på kontot, baserat på nuvarande saldo och räntesatsen. Sedan ska den dels returnera räntan och lägga till räntan till saldot. Eftersom den inte har några parametrar, men är beroende av saldot och räntesatsen, så behöver man sätta dem innan man anropar metoden för att testa den.
