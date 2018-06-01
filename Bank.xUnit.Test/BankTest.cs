@@ -6,10 +6,10 @@ namespace Bank.xUnit.Test
 {
 	public class BankTest
 	{
-		[Fact] //Balance method
-		public void ShouldIncrementBalance()
+		[Fact] 
+		public void DepositShouldIncrementBalance()
 		{
-			Account account = new Account(20.00/*, 1.34*/);
+			Account account = new Account(20.00, 1.34);
 
 			double deposit = 5.00;
 			account.Deposit(deposit);
@@ -18,10 +18,10 @@ namespace Bank.xUnit.Test
 			Assert.Equal(expectedBalance, actualBalance);
 		}
 
-		[Fact] //Balance method
-		public void ShouldThrowIfAmountIsUnderLimit()
+		[Fact] 
+		public void DepositShouldThrowIfAmountIsUnderLimit()
 		{
-			Account account = new Account(20.00/*, 1.34*/);
+			Account account = new Account(20.00, 1.34);
 
 			Assert.Throws<Exception>(() =>
 			{
@@ -29,21 +29,54 @@ namespace Bank.xUnit.Test
 			});
 		}
 
-		[Fact] //Balance method
-		public void ShouldThrowIfAmountIsOverLimit()
+		//[Fact] 
+		//public void DepositShouldThrowIfAmountIsOverLimit()
+		//{
+		//	Account account = new Account(20.00/*, 1.34*/);
+
+		//	Assert.Throws<Exception>(() =>
+		//	{
+		//		account.Deposit(50000);
+		//	});
+		//}
+
+		[Fact]
+		public void DepositTransferShouldThrowIfNaN()
 		{
-			Account account = new Account(20.00/*, 1.34*/);
+			Account account = new Account(50, 1.34);
 
 			Assert.Throws<Exception>(() =>
 			{
-				account.Deposit(50000);
+				account.Deposit(double.NaN);
 			});
 		}
 
-		[Fact] //Withdraw method
-		public void ShouldWithdrawAmountIfValid()
+		[Fact]
+		public void DepositShouldThrowIfPositiveInfinity()
 		{
-			Account account = new Account(100/*, 1.34*/);
+			Account account = new Account(50, 1.34);
+
+			Assert.Throws<Exception>(() =>
+			{
+				account.Deposit(double.PositiveInfinity);
+			});
+		}
+
+		[Fact]
+		public void DepositShouldThrowIfNegativeInfinity()
+		{
+			Account account = new Account(50, 1.34);
+
+			Assert.Throws<Exception>(() =>
+			{
+				account.Deposit(double.NegativeInfinity);
+			});
+		}
+
+		[Fact] 
+		public void WithdrawShouldWithdrawAmountIfValid()
+		{
+			Account account = new Account(100, 1.34);
 
 			double amount = 50;
 			account.Withdraw(amount);
@@ -52,10 +85,10 @@ namespace Bank.xUnit.Test
 			Assert.Equal(expectedBalance, actualBalance);
 		}
 
-		[Fact] //Withdraw method
-		public void ShouldThrowIfUnavailableFunds()
+		[Fact] 
+		public void WithdrawShouldThrowIfUnavailableFunds()
 		{
-			Account account = new Account(0/*, 1.34*/);
+			Account account = new Account(0, 1.34);
 
 			Assert.Throws<Exception>(() =>
 			{
@@ -63,21 +96,21 @@ namespace Bank.xUnit.Test
 			});
 		}
 
-		[Fact] //Withdraw method
-		public void ShouldThrowIfOverLimit()
-		{
-			Account account = new Account(500/*, 1.34*/);
+		//[Fact] 
+		//public void WithdrawShouldThrowIfOverLimit()
+		//{
+		//	Account account = new Account(500/*, 1.34*/);
 
-			Assert.Throws<Exception>(() =>
-			{
-				account.Withdraw(6000);
-			});
-		}
+		//	Assert.Throws<Exception>(() =>
+		//	{
+		//		account.Withdraw(6000);
+		//	});
+		//}
 
-		[Fact] //Withdraw method
-		public void ShouldThrowIfWithdrawAmountIsMinus()
+		[Fact] 
+		public void WithdrawShouldThrowIfWithdrawAmountIsNegative()
 		{
-			Account account = new Account(100/*, 1.34*/);
+			Account account = new Account(100, 1.34);
 
 			Assert.Throws<Exception>(() =>
 			{
@@ -85,11 +118,44 @@ namespace Bank.xUnit.Test
 			});
 		}
 
-		[Fact] //Transfer method
-		public void ShouldTransferToSavingsIfSuccessful()
+		[Fact] 
+		public void WithdrawShouldThrowIfNaN()
 		{
-			Account account = new Account(500/*, 1.34*/);
-			Account savingsAccount = new Account(1000/*, 1.34*/);
+			Account account = new Account(50, 1.34);
+
+			Assert.Throws<Exception>(() =>
+			{
+				account.Withdraw(double.NaN);
+			});
+		}
+
+		[Fact]
+		public void WithdrawShouldThrowIfPositiveInfinity()
+		{
+			Account account = new Account(50, 1.34);
+
+			Assert.Throws<Exception>(() =>
+			{
+				account.Withdraw( double.PositiveInfinity);
+			});
+		}
+
+		[Fact]
+		public void WithdrawShouldThrowIfNegativeInfinity()
+		{
+			Account account = new Account(50, 1.34);
+
+			Assert.Throws<Exception>(() =>
+			{
+				account.Withdraw(double.NegativeInfinity);
+			});
+		}
+
+		[Fact] 
+		public void TransferShouldTransferToSavingsIfSuccessful()
+		{
+			Account account = new Account(500, 1.34);
+			Account savingsAccount = new Account(1000, 1.34);
 
 			double amount = 100;
 			account.Transfer(savingsAccount, amount);
@@ -98,11 +164,11 @@ namespace Bank.xUnit.Test
 			Assert.Equal(expectedBalance, actualBalance);
 		}
 
-		[Fact] //Transfer method
-		public void ShouldWithdrawFromAccountIfSuccessful()
+		[Fact]
+		public void TransferShouldWithdrawFromAccountIfSuccessful()
 		{
-			Account account = new Account(500/*, 1.34*/);
-			Account savingsAccount = new Account(1000/*, 1.34*/);
+			Account account = new Account(500, 1.34);
+			Account savingsAccount = new Account(1000, 1.34);
 
 			double amount = 100;
 			account.Transfer(savingsAccount, amount);
@@ -111,11 +177,11 @@ namespace Bank.xUnit.Test
 			Assert.Equal(expectedBalance, actualBalance);
 		}
 
-		[Fact] //Transfer method
-		public void ShouldThrowIfAmountToTransferIsMinus()
+		[Fact] 
+		public void TransferShouldThrowIfAmountToTransferIsNegative()
 		{
-			Account account = new Account(0/*, 1.34*/);
-			Account savingsAccount = new Account(50/*, 1.34*/);
+			Account account = new Account(0, 1.34);
+			Account savingsAccount = new Account(50, 1.34);
 
 			Assert.Throws<Exception>(() =>
 			{
@@ -124,13 +190,61 @@ namespace Bank.xUnit.Test
 		}
 
 		[Fact]
-		public void ShouldThrowIfTransferingToSameAccount()
+		public void TransferShouldThrowIfTransferingToSameAccount()
 		{
-			Account account = new Account(50/*, 1.34*/);
+			Account account = new Account(50, 1.34);
 
 			Assert.Throws<Exception>(() =>
 			{
 				account.Transfer(account, 5);
+			});
+		}
+
+		[Fact] 
+		public void TransferShouldThrowIfNull()
+		{
+			Account account = new Account(50, 1.34);
+			Account savingsAccount = new Account(50, 1.34);
+
+			Assert.Throws<Exception>(() =>
+			{
+				account.Transfer(null, 0);
+			});
+		}
+
+		[Fact] 
+		public void TransferShouldThrowIfNaN()
+		{
+			Account account = new Account(50, 1.34);
+			Account savingsAccount = new Account(50, 1.34);
+
+			Assert.Throws<Exception>(() =>
+			{
+				account.Transfer(savingsAccount, double.NaN);
+			});
+		}
+
+		[Fact] 
+		public void TransferShouldThrowIfPositiveInfinity()
+		{
+			Account account = new Account(50, 1.34);
+			Account savingsAccount = new Account(50, 1.34);
+
+			Assert.Throws<Exception>(() =>
+			{
+				account.Transfer(savingsAccount, double.PositiveInfinity);
+			});
+		}
+
+		[Fact]
+		public void TransferShouldThrowIfNegativeInfinity()
+		{
+			Account account = new Account(50, 1.34);
+			Account savingsAccount = new Account(50, 1.34);
+
+			Assert.Throws<Exception>(() =>
+			{
+				account.Transfer(savingsAccount, double.NegativeInfinity);
 			});
 		}
 	}
