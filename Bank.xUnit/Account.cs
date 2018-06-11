@@ -6,13 +6,11 @@ namespace Bank.xUnit
 {
 	public class Account
 	{
-		public double Interest { get; set; }
 		public double Balance { get; private set; }
 
-		public Account(double initialBalance, double interest)
+		public Account(double initialBalance)
 		{
 			this.Balance = initialBalance;
-			this.Interest = interest;
 		}
 
 		public void Deposit(double amount)
@@ -60,13 +58,5 @@ namespace Bank.xUnit
 			else
 				return false;
 		}
-
-		public double CalculateInterest()
-		{
-			this.Interest = this.Balance * Interest;
-
-			return Interest = Interest + Balance;
-		}
-		//För VG.Räknar ut räntan på kontot, baserat på nuvarande saldo och räntesatsen. Sedan ska den dels returnera räntan och lägga till räntan till saldot. Eftersom den inte har några parametrar, men är beroende av saldot och räntesatsen, så behöver man sätta dem innan man anropar metoden för att testa den.
 	}
 }
