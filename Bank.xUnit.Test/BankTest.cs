@@ -29,19 +29,8 @@ namespace Bank.xUnit.Test
 			});
 		}
 
-		//[Fact] 
-		//public void DepositShouldThrowIfAmountIsOverLimit()
-		//{
-		//	Account account = new Account(20.00/*, 1.34*/);
-
-		//	Assert.Throws<Exception>(() =>
-		//	{
-		//		account.Deposit(50000);
-		//	});
-		//}
-
 		[Fact]
-		public void DepositTransferShouldThrowIfNaN()
+		public void DepositShouldThrowIfNaN()
 		{
 			Account account = new Account(50);
 
@@ -95,17 +84,6 @@ namespace Bank.xUnit.Test
 				account.Withdraw(70);
 			});
 		}
-
-		//[Fact] 
-		//public void WithdrawShouldThrowIfOverLimit()
-		//{
-		//	Account account = new Account(500/*, 1.34*/);
-
-		//	Assert.Throws<Exception>(() =>
-		//	{
-		//		account.Withdraw(6000);
-		//	});
-		//}
 
 		[Fact] 
 		public void WithdrawShouldThrowIfWithdrawAmountIsNegative()
