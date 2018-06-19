@@ -45,8 +45,6 @@ namespace Bank.xUnit
 				throw new Exception("You can't transfer to the same account.");
 			else if (double.IsNaN(amount))
 				throw new Exception("The amount is not a number");
-			//if (amount > this.Balance)
-			//	throw new Exception("You dont have enough funds to transfer.");
 			else if (double.IsPositiveInfinity(amount) || double.IsNegativeInfinity(amount))
 				throw new Exception("The amount exceeded the infinity limit");
 			else if (amount < this.Balance)
