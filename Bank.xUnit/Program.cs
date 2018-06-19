@@ -6,7 +6,13 @@ namespace Bank.xUnit
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+			//Account account = new Account(10/*, 3.4*/);
+
+			//account.Transfer(account, 5);
+
+			Console.WriteLine("Hello World!");
+
+			Console.ReadKey();
         }
     }
 }
